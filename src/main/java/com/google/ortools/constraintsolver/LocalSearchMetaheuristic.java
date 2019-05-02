@@ -70,6 +70,7 @@ private static final long serialVersionUID = 0L;
     return com.google.ortools.constraintsolver.RoutingEnums.internal_static_operations_research_LocalSearchMetaheuristic_descriptor;
   }
 
+  @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.ortools.constraintsolver.RoutingEnums.internal_static_operations_research_LocalSearchMetaheuristic_fieldAccessorTable
@@ -84,12 +85,22 @@ private static final long serialVersionUID = 0L;
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <pre>
+     * Means "not set". If the solver sees that, it'll behave like for
+     * AUTOMATIC. But this value won't override others upon a proto MergeFrom(),
+     * whereas "AUTOMATIC" will.
+     * </pre>
+     *
+     * <code>UNSET = 0;</code>
+     */
+    UNSET(0),
+    /**
+     * <pre>
      * Lets the solver select the metaheuristic.
      * </pre>
      *
-     * <code>AUTOMATIC = 0;</code>
+     * <code>AUTOMATIC = 6;</code>
      */
-    AUTOMATIC(0),
+    AUTOMATIC(6),
     /**
      * <pre>
      * Accepts improving (cost-reducing) local search neighbors until a local
@@ -129,24 +140,35 @@ private static final long serialVersionUID = 0L;
     TABU_SEARCH(4),
     /**
      * <pre>
-     * Uses tabu search on the objective value of solution to escape local
-     * minima
+     * Uses tabu search on a list of variables to escape local minima. The list
+     * of variables to use must be provided via the SetTabuVarsCallback
+     * callback.
      * </pre>
      *
-     * <code>OBJECTIVE_TABU_SEARCH = 5;</code>
+     * <code>GENERIC_TABU_SEARCH = 5;</code>
      */
-    OBJECTIVE_TABU_SEARCH(5),
+    GENERIC_TABU_SEARCH(5),
     UNRECOGNIZED(-1),
     ;
 
     /**
      * <pre>
+     * Means "not set". If the solver sees that, it'll behave like for
+     * AUTOMATIC. But this value won't override others upon a proto MergeFrom(),
+     * whereas "AUTOMATIC" will.
+     * </pre>
+     *
+     * <code>UNSET = 0;</code>
+     */
+    public static final int UNSET_VALUE = 0;
+    /**
+     * <pre>
      * Lets the solver select the metaheuristic.
      * </pre>
      *
-     * <code>AUTOMATIC = 0;</code>
+     * <code>AUTOMATIC = 6;</code>
      */
-    public static final int AUTOMATIC_VALUE = 0;
+    public static final int AUTOMATIC_VALUE = 6;
     /**
      * <pre>
      * Accepts improving (cost-reducing) local search neighbors until a local
@@ -186,13 +208,14 @@ private static final long serialVersionUID = 0L;
     public static final int TABU_SEARCH_VALUE = 4;
     /**
      * <pre>
-     * Uses tabu search on the objective value of solution to escape local
-     * minima
+     * Uses tabu search on a list of variables to escape local minima. The list
+     * of variables to use must be provided via the SetTabuVarsCallback
+     * callback.
      * </pre>
      *
-     * <code>OBJECTIVE_TABU_SEARCH = 5;</code>
+     * <code>GENERIC_TABU_SEARCH = 5;</code>
      */
-    public static final int OBJECTIVE_TABU_SEARCH_VALUE = 5;
+    public static final int GENERIC_TABU_SEARCH_VALUE = 5;
 
 
     public final int getNumber() {
@@ -213,12 +236,13 @@ private static final long serialVersionUID = 0L;
 
     public static Value forNumber(int value) {
       switch (value) {
-        case 0: return AUTOMATIC;
+        case 0: return UNSET;
+        case 6: return AUTOMATIC;
         case 1: return GREEDY_DESCENT;
         case 2: return GUIDED_LOCAL_SEARCH;
         case 3: return SIMULATED_ANNEALING;
         case 4: return TABU_SEARCH;
-        case 5: return OBJECTIVE_TABU_SEARCH;
+        case 5: return GENERIC_TABU_SEARCH;
         default: return null;
       }
     }
@@ -272,6 +296,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
+  @java.lang.Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -281,11 +306,13 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
+  @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     unknownFields.writeTo(output);
   }
 
+  @java.lang.Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -393,6 +420,7 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
+  @java.lang.Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
@@ -400,6 +428,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder(com.google.ortools.constraintsolver.LocalSearchMetaheuristic prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
+  @java.lang.Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
@@ -428,6 +457,7 @@ private static final long serialVersionUID = 0L;
       return com.google.ortools.constraintsolver.RoutingEnums.internal_static_operations_research_LocalSearchMetaheuristic_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.ortools.constraintsolver.RoutingEnums.internal_static_operations_research_LocalSearchMetaheuristic_fieldAccessorTable
@@ -450,20 +480,24 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
+    @java.lang.Override
     public Builder clear() {
       super.clear();
       return this;
     }
 
+    @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.ortools.constraintsolver.RoutingEnums.internal_static_operations_research_LocalSearchMetaheuristic_descriptor;
     }
 
+    @java.lang.Override
     public com.google.ortools.constraintsolver.LocalSearchMetaheuristic getDefaultInstanceForType() {
       return com.google.ortools.constraintsolver.LocalSearchMetaheuristic.getDefaultInstance();
     }
 
+    @java.lang.Override
     public com.google.ortools.constraintsolver.LocalSearchMetaheuristic build() {
       com.google.ortools.constraintsolver.LocalSearchMetaheuristic result = buildPartial();
       if (!result.isInitialized()) {
@@ -472,38 +506,46 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
+    @java.lang.Override
     public com.google.ortools.constraintsolver.LocalSearchMetaheuristic buildPartial() {
       com.google.ortools.constraintsolver.LocalSearchMetaheuristic result = new com.google.ortools.constraintsolver.LocalSearchMetaheuristic(this);
       onBuilt();
       return result;
     }
 
+    @java.lang.Override
     public Builder clone() {
       return (Builder) super.clone();
     }
+    @java.lang.Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
       return (Builder) super.setField(field, value);
     }
+    @java.lang.Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
       return (Builder) super.clearField(field);
     }
+    @java.lang.Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
       return (Builder) super.clearOneof(oneof);
     }
+    @java.lang.Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, java.lang.Object value) {
       return (Builder) super.setRepeatedField(field, index, value);
     }
+    @java.lang.Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
       return (Builder) super.addRepeatedField(field, value);
     }
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.ortools.constraintsolver.LocalSearchMetaheuristic) {
         return mergeFrom((com.google.ortools.constraintsolver.LocalSearchMetaheuristic)other);
@@ -520,10 +562,12 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    @java.lang.Override
     public final boolean isInitialized() {
       return true;
     }
 
+    @java.lang.Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -541,11 +585,13 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
+    @java.lang.Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.setUnknownFieldsProto3(unknownFields);
     }
 
+    @java.lang.Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -567,6 +613,7 @@ private static final long serialVersionUID = 0L;
 
   private static final com.google.protobuf.Parser<LocalSearchMetaheuristic>
       PARSER = new com.google.protobuf.AbstractParser<LocalSearchMetaheuristic>() {
+    @java.lang.Override
     public LocalSearchMetaheuristic parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -584,6 +631,7 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
+  @java.lang.Override
   public com.google.ortools.constraintsolver.LocalSearchMetaheuristic getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }

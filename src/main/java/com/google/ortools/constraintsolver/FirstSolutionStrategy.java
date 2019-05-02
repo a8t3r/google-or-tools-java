@@ -69,6 +69,7 @@ private static final long serialVersionUID = 0L;
     return com.google.ortools.constraintsolver.RoutingEnums.internal_static_operations_research_FirstSolutionStrategy_descriptor;
   }
 
+  @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.ortools.constraintsolver.RoutingEnums.internal_static_operations_research_FirstSolutionStrategy_fieldAccessorTable
@@ -83,13 +84,21 @@ private static final long serialVersionUID = 0L;
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <pre>
+     * See the homonymous value in LocalSearchMetaheuristic.
+     * </pre>
+     *
+     * <code>UNSET = 0;</code>
+     */
+    UNSET(0),
+    /**
+     * <pre>
      * Lets the solver detect which strategy to use according to the model being
      * solved.
      * </pre>
      *
-     * <code>AUTOMATIC = 0;</code>
+     * <code>AUTOMATIC = 15;</code>
      */
-    AUTOMATIC(0),
+    AUTOMATIC(15),
     /**
      * <pre>
      * --- Path addition heuristics ---
@@ -184,7 +193,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Iteratively build a solution by inserting the cheapest node at its
-     * cheapest position; the cost of insertion is based on the the arc cost
+     * cheapest position; the cost of insertion is based on the arc cost
      * function. Is faster than BEST_INSERTION.
      * </pre>
      *
@@ -193,11 +202,23 @@ private static final long serialVersionUID = 0L;
     PARALLEL_CHEAPEST_INSERTION(8),
     /**
      * <pre>
+     * Iteratively build a solution by constructing routes sequentially, for
+     * each route inserting the cheapest node at its cheapest position until the
+     * route is completed; the cost of insertion is based on the arc cost
+     * function. Is faster than PARALLEL_CHEAPEST_INSERTION.
+     * </pre>
+     *
+     * <code>SEQUENTIAL_CHEAPEST_INSERTION = 14;</code>
+     */
+    SEQUENTIAL_CHEAPEST_INSERTION(14),
+    /**
+     * <pre>
      * Iteratively build a solution by inserting each node at its cheapest
-     * position; the cost of insertion is based on the the arc cost function.
+     * position; the cost of insertion is based on the arc cost function.
      * Differs from PARALLEL_CHEAPEST_INSERTION by the node selected for
-     * insertion; here nodes are considered in their order of creation. Is
-     * faster than PARALLEL_CHEAPEST_INSERTION.
+     * insertion; here nodes are considered in decreasing order of distance to
+     * the start/ends of the routes, i.e. farthest nodes are inserted first.
+     * Is faster than SEQUENTIAL_CHEAPEST_INSERTION.
      * </pre>
      *
      * <code>LOCAL_CHEAPEST_INSERTION = 9;</code>
@@ -237,13 +258,21 @@ private static final long serialVersionUID = 0L;
 
     /**
      * <pre>
+     * See the homonymous value in LocalSearchMetaheuristic.
+     * </pre>
+     *
+     * <code>UNSET = 0;</code>
+     */
+    public static final int UNSET_VALUE = 0;
+    /**
+     * <pre>
      * Lets the solver detect which strategy to use according to the model being
      * solved.
      * </pre>
      *
-     * <code>AUTOMATIC = 0;</code>
+     * <code>AUTOMATIC = 15;</code>
      */
-    public static final int AUTOMATIC_VALUE = 0;
+    public static final int AUTOMATIC_VALUE = 15;
     /**
      * <pre>
      * --- Path addition heuristics ---
@@ -338,7 +367,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Iteratively build a solution by inserting the cheapest node at its
-     * cheapest position; the cost of insertion is based on the the arc cost
+     * cheapest position; the cost of insertion is based on the arc cost
      * function. Is faster than BEST_INSERTION.
      * </pre>
      *
@@ -347,11 +376,23 @@ private static final long serialVersionUID = 0L;
     public static final int PARALLEL_CHEAPEST_INSERTION_VALUE = 8;
     /**
      * <pre>
+     * Iteratively build a solution by constructing routes sequentially, for
+     * each route inserting the cheapest node at its cheapest position until the
+     * route is completed; the cost of insertion is based on the arc cost
+     * function. Is faster than PARALLEL_CHEAPEST_INSERTION.
+     * </pre>
+     *
+     * <code>SEQUENTIAL_CHEAPEST_INSERTION = 14;</code>
+     */
+    public static final int SEQUENTIAL_CHEAPEST_INSERTION_VALUE = 14;
+    /**
+     * <pre>
      * Iteratively build a solution by inserting each node at its cheapest
-     * position; the cost of insertion is based on the the arc cost function.
+     * position; the cost of insertion is based on the arc cost function.
      * Differs from PARALLEL_CHEAPEST_INSERTION by the node selected for
-     * insertion; here nodes are considered in their order of creation. Is
-     * faster than PARALLEL_CHEAPEST_INSERTION.
+     * insertion; here nodes are considered in decreasing order of distance to
+     * the start/ends of the routes, i.e. farthest nodes are inserted first.
+     * Is faster than SEQUENTIAL_CHEAPEST_INSERTION.
      * </pre>
      *
      * <code>LOCAL_CHEAPEST_INSERTION = 9;</code>
@@ -406,7 +447,8 @@ private static final long serialVersionUID = 0L;
 
     public static Value forNumber(int value) {
       switch (value) {
-        case 0: return AUTOMATIC;
+        case 0: return UNSET;
+        case 15: return AUTOMATIC;
         case 3: return PATH_CHEAPEST_ARC;
         case 4: return PATH_MOST_CONSTRAINED_ARC;
         case 5: return EVALUATOR_STRATEGY;
@@ -416,6 +458,7 @@ private static final long serialVersionUID = 0L;
         case 6: return ALL_UNPERFORMED;
         case 7: return BEST_INSERTION;
         case 8: return PARALLEL_CHEAPEST_INSERTION;
+        case 14: return SEQUENTIAL_CHEAPEST_INSERTION;
         case 9: return LOCAL_CHEAPEST_INSERTION;
         case 1: return GLOBAL_CHEAPEST_ARC;
         case 2: return LOCAL_CHEAPEST_ARC;
@@ -473,6 +516,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
+  @java.lang.Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -482,11 +526,13 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
+  @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     unknownFields.writeTo(output);
   }
 
+  @java.lang.Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -594,6 +640,7 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
+  @java.lang.Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
@@ -601,6 +648,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder(com.google.ortools.constraintsolver.FirstSolutionStrategy prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
+  @java.lang.Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
@@ -628,6 +676,7 @@ private static final long serialVersionUID = 0L;
       return com.google.ortools.constraintsolver.RoutingEnums.internal_static_operations_research_FirstSolutionStrategy_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.ortools.constraintsolver.RoutingEnums.internal_static_operations_research_FirstSolutionStrategy_fieldAccessorTable
@@ -650,20 +699,24 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
+    @java.lang.Override
     public Builder clear() {
       super.clear();
       return this;
     }
 
+    @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.ortools.constraintsolver.RoutingEnums.internal_static_operations_research_FirstSolutionStrategy_descriptor;
     }
 
+    @java.lang.Override
     public com.google.ortools.constraintsolver.FirstSolutionStrategy getDefaultInstanceForType() {
       return com.google.ortools.constraintsolver.FirstSolutionStrategy.getDefaultInstance();
     }
 
+    @java.lang.Override
     public com.google.ortools.constraintsolver.FirstSolutionStrategy build() {
       com.google.ortools.constraintsolver.FirstSolutionStrategy result = buildPartial();
       if (!result.isInitialized()) {
@@ -672,38 +725,46 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
+    @java.lang.Override
     public com.google.ortools.constraintsolver.FirstSolutionStrategy buildPartial() {
       com.google.ortools.constraintsolver.FirstSolutionStrategy result = new com.google.ortools.constraintsolver.FirstSolutionStrategy(this);
       onBuilt();
       return result;
     }
 
+    @java.lang.Override
     public Builder clone() {
       return (Builder) super.clone();
     }
+    @java.lang.Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
       return (Builder) super.setField(field, value);
     }
+    @java.lang.Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
       return (Builder) super.clearField(field);
     }
+    @java.lang.Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
       return (Builder) super.clearOneof(oneof);
     }
+    @java.lang.Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, java.lang.Object value) {
       return (Builder) super.setRepeatedField(field, index, value);
     }
+    @java.lang.Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
       return (Builder) super.addRepeatedField(field, value);
     }
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.ortools.constraintsolver.FirstSolutionStrategy) {
         return mergeFrom((com.google.ortools.constraintsolver.FirstSolutionStrategy)other);
@@ -720,10 +781,12 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    @java.lang.Override
     public final boolean isInitialized() {
       return true;
     }
 
+    @java.lang.Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -741,11 +804,13 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
+    @java.lang.Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.setUnknownFieldsProto3(unknownFields);
     }
 
+    @java.lang.Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -767,6 +832,7 @@ private static final long serialVersionUID = 0L;
 
   private static final com.google.protobuf.Parser<FirstSolutionStrategy>
       PARSER = new com.google.protobuf.AbstractParser<FirstSolutionStrategy>() {
+    @java.lang.Override
     public FirstSolutionStrategy parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -784,6 +850,7 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
+  @java.lang.Override
   public com.google.ortools.constraintsolver.FirstSolutionStrategy getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
